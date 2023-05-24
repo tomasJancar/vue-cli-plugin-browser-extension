@@ -126,7 +126,14 @@ module.exports = (api, options) => {
 
     if (webpackConfig.plugins.has('copy')) {
       webpackConfig.plugin('copy').tap(args => {
-        args[0][0].ignore.push('browser-extension.html')
+        if (args[0]['patterns'][0]['globOptions']) {
+          args[0]['patterns'][0]['globOptions'].ignore.push('browser-extension.html')
+        }
+
+        if (args[0][0]) {
+          args[0][0].ignore.push('browser-extension.html')
+        }
+        
         return args
       })
     }
